@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html><script language="javascript"> op="";//operadores globais
+num1="0";
+num2="0";
+resp="";
+PrimeiroNumero=true;
+PontoDecimal=false;
+memoria="";
+
+ //<!- PROGRAMA APERFEIÇOADO POR EMILLY FÁVARO DA SILVA->
+ 
+    function verificatecla(caracter){
+    if(window.event) {//Internet Explorer
+        var tecla=evernt.keyCode;
+//alert (PrimeiroNumero);
+if((tecla>47) && (tecla<58)) { //Se for número
+    tecla=tecla-48;
+    mostra(tecla);}
+    if (tecla==46) {//Se for ponto .
+        mostra(".")
+    }
+    if (tecla==43) {//Se for +
+    coleta("+");}
+    if (tecla==45) {//Se for -
+    coleta("-");}
+    if (tecla==47){
+    coleta("/");} //Se for /
+    if (tecla==42) {
+    coleta("*");} //Se for *
+    if (tecla==13) {
+    calcula();}
+    if ((tecla==44) || (tecla==27)) {// Se for DEL ou ESC Atalho para Cancela Memória 
+    novocalculo();}
+    if ((tecla==109) || (tecla==77)) {//Se for m ou M Atalho para Memória
+    memo();}
+    if ((tecla==82) || (tecla==114)) {//Se for r ou R Atalho para chamar memória
+    chamamem();}
+    if ((tecla==99) || (tecla==67)) {//Se for c ou C Atalho para cancelar memória
+    cancelamemoria();}
+    document.formulario.vazio.focus();
+    }
+}
+
+function inicio(){
+    document.formulario.calculo.value="0";
+    document.formulario.calculo.style.color="#0000FF";
+    document.formulario.calculo.style.background="DDDDDD";
+    document.formulario.vazio.focus();
+}
+
+function mostra(x){
+    if(PrimeiroNumero==true){
+    document.formulario.calculo.value="0";}
+    if((PrimeiroNumero==true) && (x!=".")){
+    document.formulario.calculo.value="";}
+    PrimeiroNumero=false;
+    if((x=="." && PontoDecimal==false) || (x!=".")){
+    document.formulario.calculo.value +=x; //essa função vai monstrando os numeros na caixa de texto
+    //<!-alinhadireita();-> //e o +- vai concatenando um numero apos o outro
+    }
+if (x=="."){
+    PontoDecimal=true;}
+}
+
+function inverter(){
+    var n=eval(document.formulario.calculo.value);
+    n=1/n;
+    document.formulario.calculo.value=n;
+    PrimeiroNumero=true;
+    PontoDecimal=false;
+    num1=n;
+    op="";
+}
+
+function porcento(){
+    var z=0
+    num2=eval(document.formulario.calculo.value);
+    z=(num1*num2)/100;
+    document.formulario.calculo.value=z;
+    PrimeiroNumero=true;
+    PontoDecimal=false;
+}
+
+function coleta(y){
+    PrimeiroNumero=true;
+    PontoDecimal=false;
+    if(op==""){//se o operador for vazio
+op=y; //atribui o valor a variavel op o caracter +ou- etc.. conforme o clicado no botao
+num1=eval(document.formulario.calculo.value);} //atribui a num1 o valor da caixa de texto
+else{ //limpa a caixa de texto
+    num2=eval(document.formulario.calculo.value);
+    document.formulario.calculo.value=eval(num1+op+num2);
+    num1=eval(num1+op+num2);
+    op=y;
+}
+}
+
+function calcula(){
+    PontoDecimal=false;
+    if(op!=''){
+num2=document.formulario.calculo.value//num2 recebe oque esta na caixa de texto.
+resp=eval(num1+op+document.formulario.calculo.value); //resp recebe o valor do num1+op+num2, exemplo 2+3
+document.formulario.calculo.value=eval(resp); //retorna o valor dos mesmos 2+3 como resposta na caixa de texto devido ao eval
+num1=eval(resp); //se o eval nao estivesse ai apareceria na caixa de texto 2+3. o eval retorna o valor do 2+3
+num2="0";
+op='';
+}
+}
+
+
